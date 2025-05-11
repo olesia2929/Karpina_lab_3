@@ -36,7 +36,7 @@ class StartState(State):
         super().__init__()
 
     def check_self(self, char: str) -> bool:
-        return False  # StartState does not consume any character
+        return False
 
     def name(self) -> str:
         return "StartState"
@@ -49,8 +49,7 @@ class TerminationState(State):
         super().__init__()
 
     def check_self(self, char: str) -> bool:
-        return False  # TerminationState does not consume any character
-
+        return False
     def name(self) -> str:
         return "TerminationState"
 
@@ -60,7 +59,7 @@ class DotState(State):
         super().__init__()
 # Implement
     def check_self(self, char: str) -> bool:
-        return True  # Matches any single character
+        return True
 # Implement
     def name(self) -> str:
         return "DotState"
@@ -84,7 +83,7 @@ class StarState(State):
     def __init__(self, checking_state: State):
         super().__init__()
         self.checking_state = checking_state
-        self.next_states.append(self)  # StarState can loop back to itself
+        self.next_states.append(self)
         self.next_states.extend(checking_state.next_states)  # Can skip to next states
 
     def check_self(self, char: str) -> bool:
@@ -99,7 +98,7 @@ class PlusState(State):
     def __init__(self, checking_state: State):
         super().__init__()
         self.checking_state = checking_state
-        self.next_states.append(self)  # PlusState can loop back to itself
+        self.next_states.append(self)
         self.next_states.extend(checking_state.next_states)  # Can transition forward after repetition
 
     def check_self(self, char: str) -> bool:
@@ -133,13 +132,7 @@ class RegexFSM:
             #prev_state = tmp_next_state
             prev_state.next_states.append(tmp_next_state)
             prev_state = tmp_next_state
-            self.states.append(tmp_next_state) 
-
-            #     
-            #     prev_state = self.start_state
-            # if i>=0:
-            #     if regex_expr[i-1] == '*':
-            #         prev_state = self.start_state                    
+            self.states.append(tmp_next_state)                 
 
  
         prev_state.next_states.append(self.termination_state)
@@ -187,7 +180,7 @@ class RegexFSM:
         for state in self.states:
             next_state_names = [s.name() for s in state.next_states]
             print(f"  {state.name()} -> {next_state_names}")
-        print(f"  {self.termination_state.name()} -> []")  # Termination state has no transitions
+        print(f"  {self.termination_state.name()} -> []")
 
 
 if __name__ == "__main__":
